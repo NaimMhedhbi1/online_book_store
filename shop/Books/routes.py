@@ -1,37 +1,37 @@
 from flask import render_template,session, request,redirect,url_for,flash,current_app
 from shop import app,db,photos, search
 from .models import Category,Brand,Addproduct
-from .forms import Addproducts
+from .forms import AddBooks
 import secrets
 import os
 
 
-def brands():
-    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-    return brands
+def Authors():
+    Authors = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    return Authors
 
-def categories():
-    categories = Category.query.join(Addproduct,(Category.id == Addproduct.category_id)).all()
-    return categories
+def Genres():
+    Genres = Category.query.join(Addproduct,(Category.id == Addproduct.category_id)).all()
+    return Genres
 
 
 
 @app.route('/')
 def home():
     page = request.args.get('page',1, type=int)
-    products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=8)
-    return render_template('products/index.html', products=products,brands=brands(),categories=categories())
+    Books = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=8)
+    return render_template('Books/index.html', Books=Books,Authors=Authors(),Genres=Genres())
 
 @app.route('/result')
 def result():
     searchword = request.args.get('q')
-    products = Addproduct.query.msearch(searchword, fields=['name','desc'] , limit=6)
-    return render_template('products/result.html',products=products,brands=brands(),categories=categories())
+    Books = Addproduct.query.msearch(searchword, fields=['name','desc'] , limit=6)
+    return render_template('Books/result.html',Books=Books,Authors=Authors(),Genres=Genres())
 
 @app.route('/product/<int:id>')
 def single_page(id):
     product = Addproduct.query.get_or_404(id)
-    return render_template('products/single_page.html',product=product,brands=brands(),categories=categories())
+    return render_template('Books/single_page.html',product=product,Authors=Authors(),Genres=Genres())
 
 
 
@@ -41,15 +41,15 @@ def get_brand(id):
     page = request.args.get('page',1, type=int)
     get_brand = Brand.query.filter_by(id=id).first_or_404()
     brand = Addproduct.query.filter_by(brand=get_brand).paginate(page=page, per_page=8)
-    return render_template('products/index.html',brand=brand,brands=brands(),categories=categories(),get_brand=get_brand)
+    return render_template('Books/index.html',brand=brand,Authors=Authors(),Genres=Genres(),get_brand=get_brand)
 
 
-@app.route('/categories/<int:id>')
+@app.route('/Genres/<int:id>')
 def get_category(id):
     page = request.args.get('page',1, type=int)
     get_cat = Category.query.filter_by(id=id).first_or_404()
     get_cat_prod = Addproduct.query.filter_by(category=get_cat).paginate(page=page, per_page=8)
-    return render_template('products/index.html',get_cat_prod=get_cat_prod,brands=brands(),categories=categories(),get_cat=get_cat)
+    return render_template('Books/index.html',get_cat_prod=get_cat_prod,Authors=Authors(),Genres=Genres(),get_cat=get_cat)
 
 
 @app.route('/addbrand',methods=['GET','POST'])
@@ -61,7 +61,7 @@ def addbrand():
         flash(f'The brand {getbrand} was added to your database','success')
         db.session.commit()
         return redirect(url_for('addbrand'))
-    return render_template('products/addbrand.html', title='Add brand',brands='brands')
+    return render_template('Books/addbrand.html', title='Add brand',Authors='Authors')
 
 @app.route('/updatebrand/<int:id>',methods=['GET','POST'])
 def updatebrand(id):
@@ -74,9 +74,9 @@ def updatebrand(id):
         updatebrand.name = brand
         flash(f'The brand {updatebrand.name} was changed to {brand}','success')
         db.session.commit()
-        return redirect(url_for('brands'))
+        return redirect(url_for('Authors'))
     brand = updatebrand.name
-    return render_template('products/addbrand.html', title='Udate brand',brands='brands',updatebrand=updatebrand)
+    return render_template('Books/addbrand.html', title='Udate brand',Authors='Authors',updatebrand=updatebrand)
 
 
 @app.route('/deletebrand/<int:id>', methods=['GET','POST'])
@@ -99,7 +99,7 @@ def addcat():
         flash(f'The brand {getcat} was added to your database','success')
         db.session.commit()
         return redirect(url_for('addcat'))
-    return render_template('products/addbrand.html', title='Add category')
+    return render_template('Books/addbrand.html', title='Add category')
 
 
 @app.route('/updatecat/<int:id>',methods=['GET','POST'])
@@ -113,9 +113,9 @@ def updatecat(id):
         updatecat.name = category
         flash(f'The category {updatecat.name} was changed to {category}','success')
         db.session.commit()
-        return redirect(url_for('categories'))
+        return redirect(url_for('Genres'))
     category = updatecat.name
-    return render_template('products/addbrand.html', title='Update cat',updatecat=updatecat)
+    return render_template('Books/addbrand.html', title='Update cat',updatecat=updatecat)
 
 
 
@@ -133,9 +133,9 @@ def deletecat(id):
 
 @app.route('/addproduct', methods=['GET','POST'])
 def addproduct():
-    form = Addproducts(request.form)
-    brands = Brand.query.all()
-    categories = Category.query.all()
+    form = AddBooks(request.form)
+    Authors = Brand.query.all()
+    Genres = Category.query.all()
     if request.method=="POST"and 'image_1' in request.files:
         name = form.name.data
         price = form.price.data
@@ -153,17 +153,17 @@ def addproduct():
         flash(f'The product {name} was added in database','success')
         db.session.commit()
         return redirect(url_for('admin'))
-    return render_template('products/addproduct.html', form=form, title='Add a Product', brands=brands,categories=categories)
+    return render_template('Books/addproduct.html', form=form, title='Add a Product', Authors=Authors,Genres=Genres)
 
 
 
 
 @app.route('/updateproduct/<int:id>', methods=['GET','POST'])
 def updateproduct(id):
-    form = Addproducts(request.form)
+    form = AddBooks(request.form)
     product = Addproduct.query.get_or_404(id)
-    brands = Brand.query.all()
-    categories = Category.query.all()
+    Authors = Brand.query.all()
+    Genres = Category.query.all()
     brand = request.form.get('brand')
     category = request.form.get('category')
     if request.method =="POST":
@@ -205,7 +205,7 @@ def updateproduct(id):
     form.discription.data = product.desc
     brand = product.brand.name
     category = product.category.name
-    return render_template('products/addproduct.html', form=form, title='Update Product',getproduct=product, brands=brands,categories=categories)
+    return render_template('Books/addproduct.html', form=form, title='Update Product',getproduct=product, Authors=Authors,Genres=Genres)
 
 
 @app.route('/deleteproduct/<int:id>', methods=['POST'])

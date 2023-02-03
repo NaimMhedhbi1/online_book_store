@@ -3,7 +3,7 @@
 {% include 'navbar.html' %}
 <div class="container">
     <div class="row">
-        {% for product in products %}
+        {% for product in Books %}
       <div class="col-md-3 mt-4">
         <div class="card">
             <img src="{{url_for('static', filename='images/' + product.image_1)}}" class="card-img-top" alt="{{product.name}}" height="200" width="200">
