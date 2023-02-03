@@ -39,7 +39,7 @@ login_manager.needs_refresh_message_category='danger'
 login_manager.login_message = u"Please login first"
 
 
-from shop.Books import routes
+from shop.products import routes
 from shop.admin import routes
 from shop.carts import carts
 from shop.customers import routes

@@ -2,23 +2,23 @@ from flask import render_template,session, request,redirect,url_for,flash
 from shop import app,db,bcrypt
 from .forms import RegistrationForm,LoginForm
 from .models import User
-from shop.Books.models import Addproduct,Category,Brand
+from shop.products.models import Addproduct,Category,Brand
 
 @app.route('/admin')
 def admin():
-    Books = Addproduct.query.all()
-    return render_template('admin/index.html', title='Admin page',Books=Books)
+    products = Addproduct.query.all()
+    return render_template('admin/index.html', title='Admin page',products=products)
 
-@app.route('/Authors')
-def Authors():
-    Authors = Brand.query.order_by(Brand.id.desc()).all()
-    return render_template('admin/brand.html', title='Authors',Authors=Authors)
+@app.route('/brands')
+def brands():
+    brands = Brand.query.order_by(Brand.id.desc()).all()
+    return render_template('admin/brand.html', title='brands',brands=brands)
 
 
-@app.route('/Genres')
-def Genres():
-    Genres = Category.query.order_by(Category.id.desc()).all()
-    return render_template('admin/brand.html', title='Genres',Genres=Genres)
+@app.route('/categories')
+def categories():
+    categories = Category.query.order_by(Category.id.desc()).all()
+    return render_template('admin/brand.html', title='categories',categories=categories)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

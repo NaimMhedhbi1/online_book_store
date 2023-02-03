@@ -13,14 +13,14 @@
               <a class="nav-link" href="{{url_for('admin')}}">product <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('Authors')}}">brand</a>
+              <a class="nav-link" href="{{url_for('brands')}}">brand</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('Genres')}}">catgory</a>
+              <a class="nav-link" href="{{url_for('categories')}}">catgory</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add Books
+                Add products
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="{{url_for('addproduct')}}">Add product</a>
@@ -40,7 +40,7 @@
         <div class="col-md-3"></div>
             <div class="col-md-6">
                 {% include '_messages.html' %}
-                {% if Authors %}
+                {% if brands %}
                 <div class="text-center  p-2 h3 mb-3">{% if updatebrand %} Update {% else %}Add a {% endif %} brand</div>     
                 <form method=post>
                 <div>

@@ -12,14 +12,14 @@
               <a class="nav-link" href="{{url_for('admin')}}">product <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('Authors')}}">brand</a>
+              <a class="nav-link" href="{{url_for('brands')}}">brand</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('Genres')}}">catgory</a>
+              <a class="nav-link" href="{{url_for('categories')}}">catgory</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add Books
+                Add products
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="{{url_for('addproduct')}}">Add product</a>
@@ -48,7 +48,7 @@
             <th>Delete</th>
         </thead>
         <tbody>
-          {% for product in Books %}
+          {% for product in products %}
           <tr>
             <td>{{loop.index}}</td>
             <td> <img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{product.name}}" width="50" height="20"></td>
