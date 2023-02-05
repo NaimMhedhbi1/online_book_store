@@ -120,7 +120,7 @@ def orders(invoice):
 
 
 
-
+config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
 @app.route('/get_pdf/<invoice>', methods=['POST'])
 @login_required
 def get_pdf(invoice):
@@ -139,7 +139,7 @@ def get_pdf(invoice):
                 grandTotal = float("%.2f" % (1.06 * subTotal))
 
             rendered =  render_template('customer/pdf.html', invoice=invoice, tax=tax,grandTotal=grandTotal,customer=customer,orders=orders)
-            pdf = pdfkit.from_string(rendered, False)
+            pdf = pdfkit.from_string(rendered, False,configuration = config)
             response = make_response(pdf)
             response.headers['content-Type'] ='application/pdf'
             response.headers['content-Disposition'] ='inline; filename='+invoice+'.pdf'
