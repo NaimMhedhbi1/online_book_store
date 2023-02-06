@@ -14,5 +14,6 @@ class User(db.Model):
 
 
 
-
+from shop import app 
+app.app_context().push()
 db.create_all()

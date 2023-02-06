@@ -35,7 +35,6 @@ def single_page(id):
 
 
 
-
 @app.route('/brand/<int:id>')
 def get_brand(id):
     page = request.args.get('page',1, type=int)
@@ -156,8 +155,6 @@ def addproduct():
     return render_template('products/addproduct.html', form=form, title='Add a Product', brands=brands,categories=categories)
 
 
-
-
 @app.route('/updateproduct/<int:id>', methods=['GET','POST'])
 def updateproduct(id):
     form = Addproducts(request.form)
@@ -221,6 +218,6 @@ def deleteproduct(id):
         db.session.delete(product)
         db.session.commit()
         flash(f'The product {product.name} was delete from your record','success')
-        return redirect(url_for('adim'))
+        return redirect(url_for('admin'))
     flash(f'Can not delete the product','success')
     return redirect(url_for('admin'))
