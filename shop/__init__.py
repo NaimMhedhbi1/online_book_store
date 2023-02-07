@@ -9,11 +9,16 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+#Construction of the  the core app object...
 app = Flask(__name__)
+## Configuration of the application 
+# plugins initialization ; this is necessary. 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-app.config['SECRET_KEY']='hfouewhfoiwefoquw'
+app.config['SECRET_KEY']='hfouewhfoiwefoquw'     #this is very important to be protected 
+#losing this secret key means that the data of the customers can be risked and compromised. 
+# in orderto encrypt all of users's passwords we use secret_key varaieble which  is a string. also to encrypt other sensitive informations
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+# Compile static assets
 app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(basedir, 'static/images')
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
@@ -31,7 +36,7 @@ with app.app_context():
     else:
         migrate.init_app(app, db)
 
-
+#Initializing flask_login  and this si the minimum that we need to set up a flask login 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view='customerLogin'
