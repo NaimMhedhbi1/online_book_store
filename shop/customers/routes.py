@@ -48,7 +48,8 @@ def customer_register():
         return redirect(url_for('login'))
     return render_template('customer/register.html', form=form)
 
-
+#should wait a little bit then you can login, should refined or solved!!!
+#not instantly it logsin 
 @app.route('/customer/login', methods=['GET','POST'])
 def customerLogin():
     form = CustomerLoginFrom()
@@ -119,7 +120,7 @@ def orders(invoice):
     return render_template('customer/order.html', invoice=invoice, tax=tax,subTotal=subTotal,grandTotal=grandTotal,customer=customer,orders=orders)
 
 
-
+#should save the library under this path in the local C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe
 config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
 @app.route('/get_pdf/<invoice>', methods=['POST'])
 @login_required
