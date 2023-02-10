@@ -14,14 +14,20 @@ class Register(db.Model, UserMixin):
     email = db.Column(db.String(50), unique= True)
     password = db.Column(db.String(200), unique= False)
     country = db.Column(db.String(50), unique= False)
-    # state = db.Column(db.String(50), unique= False)
+    Street = db.Column(db.String(50), unique= False)
     city = db.Column(db.String(50), unique= False)
     contact = db.Column(db.String(50), unique= False)
     address = db.Column(db.String(50), unique= False)
     zipcode = db.Column(db.String(50), unique= False)
     profile = db.Column(db.String(200), unique= False , default='profile.jpg')
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
+    TypeOfWork = db.Column(db.String(50), unique= False)
+    employees =  db.Column(db.String(50), unique= False)
+    Additional = db.Column(db.String(50), unique= False)
+    place= db.Column(db.String(50), unique= False)
+    code = db.Column(db.String(5), unique= False)
+    phone= db.Column(db.String(5), unique= False)
+    
     def __repr__(self):
         return '<Register %r>' % self.name
 

@@ -1,39 +1,246 @@
 {% extends "layout.html" %}
 {% block content %}
 {% from "_formhelpers.html" import render_field %}
+<section class="h-100 h-custom gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <form action="" method="post">
+                    {{ form.csrf_token }}
+                  <h3 class="fw-normal mb-5" style="color: #2b11ee;">Register Customer - General Infomation</h3>
+                  <div class="mb-4 pb-2">
+                    <select class="select">
+                      <option value="1">Title</option>
+                      <option value="2">Mr</option>
+                      <option value="3">Mmr</option>
+                      
+                    </select>
+                  </div>
 
+                  <div class="row">
+                    <div class="col-md-6 mb-4 pb-2">
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <h1 class="bg-info text-center">Register</h1>
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplev2" name ="name" class="form-control form-control-lg" />
+                        <label class="form-label"  for="form3Examplev2">First name</label>
+                        {% for err in form.name.errors %}
+                        <p style="color: red;">{{err}}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-4 pb-2">
+
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplev3" name ="username" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplev3">User name</label>
+                        {% for err in form.username.errors %}
+                        <p style="color: red;">{{err}}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline">
+                      <input type="text" id="form3Examplev4" name ="TypeOfWork" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplev4">Type Of Work</label>
+                      {% for err in form.TypeOfWork.errors %}
+                      <p style="color: red;">{{err}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplev5" name= "employees" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplev5"> Number of Employees </label>
+                        {% for err in form.employees.errors %}
+                        <p style="color: red;">{{err}}</p>
+                        {% endfor %}
+                      </div>
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplev5" name= "password" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplev5">password</label>
+                        {% for err in form.password.errors %}
+                        <p style="color: red;">{{err}}</p>
+                        {% endfor %}
+                      </div>
+                      <div class="form-outline">
+                        <input type="text" id="form3Examplev5" name="confirm" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplev5">Confirm password</label>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-6 bg-indigo text-white">
+                <div class="p-5">
+                  <h3 class="fw-normal mb-5">Contact Details</h3>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                      <input type="text" id="form3Examplea2" name="Street" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea2">Street + Nr</label>
+                      {% for err in form.Street.errors %}
+                      <p style="color: rgb(255, 0, 0);">{{err}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                      <input type="text" id="form3Examplea3" name="Additional" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea3">Additional Information</label>
+                      {% for err in form.Additional.errors %}
+                      <p style="color: red;">{{err}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        <input type="text" id="form3Examplea4" name="zipcode" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplea4">Zip Code</label>
+                        {% for err in form.zipcode.errors %}
+                        <p style="color: red;">{{err}}</p>
+                        {% endfor %}
+                      </div>
+
+                    </div>
+                    <div class="col-md-7 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        <input type="text" id="form3Examplea5" name="place" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplea5">Place</label>
+                        {% for err in form.place.errors %}
+                        <p style="color: red;">{{err}}</p>
+                        {% endfor %}
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="mb-4 pb-2">
+                    <div class="form-outline form-white">
+                      <input type="text" id="form3Examplea6" name="country" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea6">Country</label>
+                      {% for err in form.country.errors %}
+                      <p style="color: red;">{{err}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        <input type="text" id="form3Examplea7" name="code" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplea7">Code +</label>
+                        {% for err in form.code.errors %}
+                        <p style="color: red;">{{err}}</p>
+                        {% endfor %}
+                      </div>
+
+                    </div>
+                    <div class="col-md-7 mb-4 pb-2">
+
+                      <div class="form-outline form-white">
+                        <input type="text" id="form3Examplea8" name="phone" class="form-control form-control-lg" />
+                        <label class="form-label" for="form3Examplea8">Phone Number</label>
+                        {% for err in form.phone.errors %}
+                        <p style="color: red;">{{err}}</p>
+                        {% endfor %}
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <div class="form-outline form-white">
+                      <input type="text" id="form3Examplea9" name="email" class="form-control form-control-lg" />
+                      <label class="form-label" for="form3Examplea9">Your Email</label>
+                      {% for err in form.email.errors %}
+                      <p style="color: red;">{{err}}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="form-check d-flex justify-content-start mb-4 pb-3">
+                    <input class="form-check-input me-3" type="checkbox" value="" id="form2Example3c" />
+                    <label class="form-check-label text-white" for="form2Example3">
+                      I do accept the <a href="{{url_for('terms')}}" class="text-white"><u>Terms and Conditions</u></a> of your
+                      site.
+                    </label>
+                  </div>
+                  
+                  <input type="submit" name="submit" value="Register" class="btn btn-light btn-lg"
+                    data-mdb-ripple-color="dark"></input>
+                 </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-2"></div>
+      </div>
     </div>
-    <form action="" method="post">
-        {{ form.csrf_token }}
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-4">
-                {{ render_field(form.name, class="form-control")}}
-                {{ render_field(form.username,class="form-control")}}
-                {{ render_field(form.email,class="form-control")}}
-                {{ render_field(form.password, class="form-control")}}
-                {{ render_field(form.confirm ,class="form-control")}}
-                {{ form.profile() }}
-            </div>
-            <div class="col-md-4">
-                {{ render_field(form.country,class="form-control")}}
-                {{ render_field(form.city, class="form-control")}}
-                {{ render_field(form.contact, class="form-control")}}
-                {{ render_field(form.address, class="form-control")}}
-                {{ render_field(form.zipcode, class="form-control")}}
-                {{ form.submit(class="btn btn-sm btn-info float-right") }}
-            </div>
-            <div class="col-md-2"></div>
-        </div>
-    </form>
-</div>
+  </div>
+</section>
+
+<style>
+
+
+@media (min-width: 1025px) {
+    .h-custom {
+    height: 100vh !important;
+    }
+    }
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+    }
+    .card-registration .select-arrow {
+    top: 13px;
+    }
+    
+    .gradient-custom-2 {
+    /* fallback for old browsers */
+    background: #a1c4fd;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1))
+    }
+    
+    .bg-indigo {
+    background-color: #4835d4;
+    }
+    @media (min-width: 992px) {
+    .card-registration-2 .bg-indigo {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    }
+    }
+    @media (max-width: 991px) {
+    .card-registration-2 .bg-indigo {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    }
+    }
+</style>
 
 {% endblock content %}
