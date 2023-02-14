@@ -30,6 +30,9 @@
                   <a class="dropdown-item" href="{{url_for('get_category',id=category.id)}}">{{category.name}}</a>
                   {% endfor %}
                 </div>
+                <li class="nav-item">
+                  <a href="{{url_for('blog')}}" class="nav-link">Our Blog</a>
+                </li>
               </li>
              {% if current_user.is_authenticated %}
              <li class="nav-item">
@@ -49,6 +52,7 @@
               <li class="nav-item">
                 <a href="{{url_for('getCart')}}" class="nav-link"> Cart ({{ session['Shoppingcart']|length }}) </a>
               </li>
+
           </ul>
           <form class="form-inline my-2 my-lg-0" action="{{url_for('result')}}">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">

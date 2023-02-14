@@ -13,6 +13,11 @@ def admin():
 def terms():
     return render_template('admin/terms.html')
 
+
+@app.route('/blog',methods=['GET','POST'])
+def blog():
+    return render_template('admin/blog.html')
+
 @app.route('/brands')
 def brands():
     brands = Brand.query.order_by(Brand.id.desc()).all()
