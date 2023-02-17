@@ -9,18 +9,18 @@ def user_loader(user_id):
 
 class Register(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key= True)
-    name = db.Column(db.String(50), unique= False)
     username = db.Column(db.String(50), unique= True)
-    email = db.Column(db.String(50), unique= True)
+    name = db.Column(db.String(50), unique= False)
     password = db.Column(db.String(200), unique= False)
+    email = db.Column(db.String(50), unique= True)
+    contact = db.Column(db.String(50), unique= False)
     country = db.Column(db.String(50), unique= False)
     Street = db.Column(db.String(50), unique= False)
     city = db.Column(db.String(50), unique= False)
-    contact = db.Column(db.String(50), unique= False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    profile = db.Column(db.String(200), unique= False , default='profile.jpg')
     address = db.Column(db.String(50), unique= False)
     zipcode = db.Column(db.String(50), unique= False)
-    profile = db.Column(db.String(200), unique= False , default='profile.jpg')
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     TypeOfWork = db.Column(db.String(50), unique= False)
     employees =  db.Column(db.String(50), unique= False)
     Additional = db.Column(db.String(50), unique= False)
@@ -64,6 +64,5 @@ db.create_all()
 
 
 
-    
 
 

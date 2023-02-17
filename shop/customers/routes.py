@@ -4,15 +4,16 @@ from shop import app,db,photos, search,bcrypt,login_manager
 from .forms import CustomerRegisterForm, CustomerLoginFrom
 from .model import Register,CustomerOrder
 import secrets
-import os
+import os #It enables user interaction with the native OS that Python is currently running on when imported.
 import json
 import pdfkit
 import stripe
 
 buplishable_key ='pk_test_MaILxTYQ15v5Uhd6NKI9wPdD00qdL0QZSl'
 stripe.api_key ='sk_test_9JlhVB6qwjcRdYzizjdwgIo0Dt00N55uxbWy'
-
-@app.route('/payment',methods=['POST'])
+#Flask is informed by the #render template() function that the route should display an HTML template.
+#Flask is informed by the #render template() function that the route should display an HTML template.
+@app.route('/payment',methods=['POST']) # app.route('/payement') decorator to create a view function called payement()
 def payment():
     invoice = request.get('invoice')
     amount = request.form.get('amount')
@@ -30,12 +31,14 @@ def payment():
     orders.status = 'Paid'
     db.session.commit()
     return redirect(url_for('thanks'))
-
+#Flask is informed by the #render template() function that the route should display an HTML template.
+# app.route('/thanks') decorator to create a view function called thanks()
 @app.route('/thanks')
 def thanks():
     return render_template('customer/thank.html')
 
-
+#Flask is informed by the #render template() function that the route should display an HTML template.
+# app.route('/customr/register') decorator to create a view function called customer_register()
 @app.route('/customer/register', methods=['GET','POST'])
 def customer_register():
     form = CustomerRegisterForm()
@@ -49,9 +52,10 @@ def customer_register():
 
     return render_template('customer/register.html', form=form)
 
-
+#Flask is informed by the #render template() function that the route should display an HTML template.
 #should wait a little bit then you can login, should refined or solved!!!
 #not instantly it logsin 
+# app.route('/customer/login') decorator to create a view function called customerLogin()
 @app.route('/customer/login', methods=['GET','POST'])
 def customerLogin():
     form = CustomerLoginFrom()
@@ -67,7 +71,7 @@ def customerLogin():
             
     return render_template('customer/login.html', form=form)
 
-
+#Flask is informed by the #render template() function that the route should display an HTML template.
 @app.route('/customer/logout')
 def customer_logout():
     logout_user()
@@ -79,7 +83,7 @@ def updateshoppingcart():
         del shopping['image']
         del shopping['colors']
     return updateshoppingcart
-
+#Flask is informed by the #render template() function that the route should display an HTML template.
 @app.route('/getorder')
 @login_required
 def get_order():
@@ -99,8 +103,8 @@ def get_order():
             flash('Some thing went wrong while get order', 'danger')
             return redirect(url_for('getCart'))
         
-
-
+#Flask is informed by the #render template() function that the route should display an HTML template.
+#Flask is informed by the #render template() function that the route should display an HTML template.
 @app.route('/orders/<invoice>')
 @login_required
 def orders(invoice):
@@ -121,7 +125,7 @@ def orders(invoice):
         return redirect(url_for('customerLogin'))
     return render_template('customer/order.html', invoice=invoice, tax=tax,subTotal=subTotal,grandTotal=grandTotal,customer=customer,orders=orders)
 
-
+#Flask is informed by the #render template() function that the route should display an HTML template.
 #should save the library under this path in the local C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe
 config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
 @app.route('/get_pdf/<invoice>', methods=['POST'])
@@ -149,5 +153,5 @@ def get_pdf(invoice):
             return response
     return request(url_for('orders'))
 
-
+#Flask is informed by the #render template() function that the route should display an HTML template.
 
