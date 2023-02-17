@@ -1,7 +1,7 @@
 from flask import render_template,session, request,redirect,url_for,flash
-from shop import app,db,bcrypt
+from shop import app,database,bcrypt
 from .forms import SignupForm,LoginForm
-from .models import Visiter
+from .models import Admin_Admin
 from shop.products.models import Addproduct,Category,Brand
 #Flask-Session is an extension for Flask that adds support for Server-side Session to your application.
 #The URL rule is prefixed with the blueprint’s URL prefix. The endpoint name, used with url_for(), is prefixed with the blueprint’s name.
@@ -49,11 +49,11 @@ def register():
     form = SignupForm()
     if form.validate_on_submit():
         hash_password = bcrypt.generate_password_hash(form.password.data) #Create hashed password. 
-        user = Visiter(_name=form.name.data,user_name=form.username.data, email=form.email.data,
+        user = Admin_Admin(name=form.name.data,username=form.username.data, email=form.email.data,
                     password=hash_password)
-        db.session.add(user)
-        flash(f'Welcome {form._name.data} Thanks for registering','success')
-        db.session.commit()
+        database.session.add(user)
+        flash(f'Welcome {form.name.data} Thanks for registering','success')
+        database.session.commit()
         return redirect(url_for('login'))
     return render_template('admin/register.html',title='Register user', form=form)
 
@@ -65,7 +65,7 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = Visiter.query.filter_by(email=form.email.data).first()
+        user = Admin_Admin.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             session['email'] = form.email.data
             flash(f'Welcome {form.email.data} You are Logedin now','success')

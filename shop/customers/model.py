@@ -1,4 +1,4 @@
-from shop import db, login_manager
+from shop import database, login_manager
 from datetime import datetime
 from flask_login import UserMixin
 import json
@@ -7,33 +7,33 @@ import json
 def user_loader(user_id):
     return Register.query.get(user_id)
 
-class Register(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key= True)
-    username = db.Column(db.String(50), unique= True)
-    name = db.Column(db.String(50), unique= False)
-    password = db.Column(db.String(200), unique= False)
-    email = db.Column(db.String(50), unique= True)
-    contact = db.Column(db.String(50), unique= False)
-    country = db.Column(db.String(50), unique= False)
-    Street = db.Column(db.String(50), unique= False)
-    city = db.Column(db.String(50), unique= False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    profile = db.Column(db.String(200), unique= False , default='profile.jpg')
-    address = db.Column(db.String(50), unique= False)
-    zipcode = db.Column(db.String(50), unique= False)
-    TypeOfWork = db.Column(db.String(50), unique= False)
-    employees =  db.Column(db.String(50), unique= False)
-    Additional = db.Column(db.String(50), unique= False)
-    place= db.Column(db.String(50), unique= False)
-    code = db.Column(db.String(5), unique= False)
-    phone= db.Column(db.String(5), unique= False)
+class Register(database.Model, UserMixin):
+    id = database.Column(database.Integer, primary_key= True)
+    username = database.Column(database.String(50), unique= True)
+    name = database.Column(database.String(50), unique= False)
+    password = database.Column(database.String(200), unique= False)
+    email = database.Column(database.String(50), unique= True)
+    contact = database.Column(database.String(50), unique= False)
+    country = database.Column(database.String(50), unique= False)
+    Street = database.Column(database.String(50), unique= False)
+    city = database.Column(database.String(50), unique= False)
+    date_created = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
+    profile = database.Column(database.String(200), unique= False , default='profile.jpg')
+    address = database.Column(database.String(50), unique= False)
+    zipcode = database.Column(database.String(50), unique= False)
+    TypeOfWork = database.Column(database.String(50), unique= False)
+    employees =  database.Column(database.String(50), unique= False)
+    Additional = database.Column(database.String(50), unique= False)
+    place= database.Column(database.String(50), unique= False)
+    code = database.Column(database.String(5), unique= False)
+    phone= database.Column(database.String(5), unique= False)
     
     def __repr__(self):
         return '<Register %r>' % self.name
 
 
-class JsonEcodedDict(db.TypeDecorator):
-    impl = db.Text
+class JsonEcodedDict(database.TypeDecorator):
+    impl = database.Text
     def process_bind_param(self, value, dialect):
         if value is None:
             return '{}'
@@ -45,13 +45,13 @@ class JsonEcodedDict(db.TypeDecorator):
         else:
             return json.loads(value)
 
-class CustomerOrder(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    invoice = db.Column(db.String(20), unique=True, nullable=False)
-    status = db.Column(db.String(20), default='Pending', nullable=False)
-    customer_id = db.Column(db.Integer, unique=False, nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    orders = db.Column(JsonEcodedDict)
+class CustomerOrder(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    invoice = database.Column(database.String(20), unique=True, nullable=False)
+    status = database.Column(database.String(20), default='Pending', nullable=False)
+    customer_id = database.Column(database.Integer, unique=False, nullable=False)
+    date_created = database.Column(database.DateTime, default=datetime.utcnow, nullable=False)
+    orders = database.Column(JsonEcodedDict)
 
     def __repr__(self):
         return'<CustomerOrder %r>' % self.invoice
@@ -60,7 +60,7 @@ class CustomerOrder(db.Model):
 # Create Database Models
 from shop import app 
 app.app_context().push()
-db.create_all()
+database.create_all()
 
 
 

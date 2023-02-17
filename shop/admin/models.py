@@ -1,4 +1,4 @@
-from shop import db
+from shop import database
 from datetime import datetime
 #<==================================================================================================>
 #Classes for manipulating dates and times are available in the datetime module.Although date and time calculations are enabled, the implementation's main goal is to efficiently extract attribute data for output formatting and manipulation.
@@ -10,19 +10,19 @@ Models which inherit UserMixin immediately gain access to 4 useful methods:
 4- get_id: Fetches a unique ID identifying the user.
 
 What does Flask's database Model mean?
-A Model is a Python class that represents a database table, and each of its characteristics corresponds to a table column. A model class inherits from db.Model and defines columns as an instance of db.Column class.
+A Model is a Python class that represents a database table, and each of its characteristics corresponds to a table column. A model class inherits from database.Model and defines columns as an instance of database.Column class.
 """
 #<==================================================================================================>
-class Visiter(db.Model):
-    id = db.Column(db.Integer, primary_key=True) #should be unique 
-    _name = db.Column(db.String(50),unique=False, nullable=False) #unique is equal to false, two users can have the same name but noit the same user name  
-    username = db.Column(db.String(80), unique=True, nullable=False) 
-    email = db.Column(db.String(120), unique=True, nullable=False) #should be a valid email otherwise it will be refused. 
-    password = db.Column(db.String(180),unique=False, nullable=False) #the database will store hashed passwords. even if the length of the password is 9 characters for example, in our database will be in a differen lenght and looking. this is because of the hashing operation 
-    profile = db.Column(db.String(180), unique=False, nullable=False,default='profile.jpg')
+class Admin_Admin(database.Model):
+    id = database.Column(database.Integer, primary_key=True) #should be unique 
+    name = database.Column(database.String(60),unique=False, nullable=False) #unique is equal to false, two users can have the same name but noit the same user name  
+    username = database.Column(database.String(100), unique=True, nullable=False) 
+    email = database.Column(database.String(100), unique=True, nullable=False) #should be a valid email otherwise it will be refused. 
+    password = database.Column(database.String(50),unique=False, nullable=False) #the database will store hashed passwords. even if the length of the password is 9 characters for example, in our database will be in a differen lenght and looking. this is because of the hashing operation 
+    profile = database.Column(database.String(140), unique=False, nullable=False,default='profile.jpg')
 
     def __repr__(self):
-        return '<Visiter %r>' % self.username
+        return '<Admin_Admin %r>' % self.username
 #<==================================================================================================>
 #The repr method is used to get a string representation of a Python object. It is common to find people using it when creating models for their flask app.
 #With the repr method, you can make a query from the database and print the result of the query. Instead of getting the location of the query object in memory, the repr method provides a better representation of the result.
@@ -33,5 +33,5 @@ class Visiter(db.Model):
 #<==================================================================================================>
 from shop import app 
 app.app_context().push()
-db.create_all()
+database.create_all()
 

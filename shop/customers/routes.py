@@ -1,6 +1,6 @@
 from flask import render_template,session, request,redirect,url_for,flash,current_app,make_response
 from flask_login import login_required, current_user, logout_user, login_user
-from shop import app,db,photos, search,bcrypt,login_manager
+from shop import app,database,photos, search,bcrypt,login_manager
 from .forms import CustomerRegisterForm, CustomerLoginFrom
 from .model import Register,CustomerOrder
 import secrets
@@ -29,7 +29,7 @@ def payment():
     )
     orders =  CustomerOrder.query.filter_by(customer_id = current_user.id,invoice=invoice).order_by(CustomerOrder.id.desc()).first()
     orders.status = 'Paid'
-    db.session.commit()
+    database.session.commit()
     return redirect(url_for('thanks'))
 #Flask is informed by the #render template() function that the route should display an HTML template.
 # app.route('/thanks') decorator to create a view function called thanks()
@@ -45,9 +45,9 @@ def customer_register():
     if form.validate_on_submit():
         hash_password = bcrypt.generate_password_hash(form.password.data)
         register = Register(name=form.name.data, username=form.username.data, email=form.email.data,password=hash_password,country=form.country.data,TypeOfWork=form.TypeOfWork.data,employees=form.employees.data,Street=form.Street.data,Additional=form.Additional.data,place=form.place.data,code=form.code.data,phone=form.phone.data, zipcode=form.zipcode.data)
-        db.session.add(register)
+        database.session.add(register)
         flash(f'Welcome {form.name.data} Thank you for registering', 'success')
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('login'))
 
     return render_template('customer/register.html', form=form)
@@ -93,8 +93,8 @@ def get_order():
         updateshoppingcart
         try:
             order = CustomerOrder(invoice=invoice,customer_id=customer_id,orders=session['Shoppingcart'])
-            db.session.add(order)
-            db.session.commit()
+            database.session.add(order)
+            database.session.commit()
             session.pop('Shoppingcart')
             flash('Your order has been sent successfully','success')
             return redirect(url_for('orders',invoice=invoice))

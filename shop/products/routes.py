@@ -1,5 +1,5 @@
 from flask import render_template,session, request,redirect,url_for,flash,current_app
-from shop import app,db,photos, search
+from shop import app,database,photos, search
 from .models import Category,Brand,Addproduct
 from .forms import Addproducts
 import secrets
@@ -57,9 +57,9 @@ def addbrand():
     if request.method =="POST":
         getbrand = request.form.get('brand')
         brand = Brand(name=getbrand)
-        db.session.add(brand)
+        database.session.add(brand)
         flash(f'The brand {getbrand} was added to your database','success')
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html', title='Add brand',brands='brands')
 #Flask is informed by the #render template() function that the route should display an HTML template.
@@ -75,7 +75,7 @@ def updatebrand(id):
     if request.method =="POST":
         updatebrand.name = brand
         flash(f'The brand {updatebrand.name} was changed to {brand}','success')
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('brands'))
     brand = updatebrand.name
     return render_template('products/addbrand.html', title='Udate brand',brands='brands',updatebrand=updatebrand)
@@ -85,9 +85,9 @@ def updatebrand(id):
 def deletebrand(id):
     brand = Brand.query.get_or_404(id)
     if request.method=="POST":
-        db.session.delete(brand)
+        database.session.delete(brand)
         flash(f"The brand {brand.name} was deleted from your database","success")
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('admin'))
     flash(f"The brand {brand.name} can't be  deleted from your database","warning")
     return redirect(url_for('admin'))
@@ -97,9 +97,9 @@ def addcat():
     if request.method =="POST":
         getcat = request.form.get('category')
         category = Category(name=getcat)
-        db.session.add(category)
+        database.session.add(category)
         flash(f'The brand {getcat} was added to your database','success')
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('addcat'))
     return render_template('products/addbrand.html', title='Add category')
 
@@ -114,7 +114,7 @@ def updatecat(id):
     if request.method =="POST":
         updatecat.name = category
         flash(f'The category {updatecat.name} was changed to {category}','success')
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('categories'))
     category = updatecat.name
     return render_template('products/addbrand.html', title='Update cat',updatecat=updatecat)
@@ -125,9 +125,9 @@ def updatecat(id):
 def deletecat(id):
     category = Category.query.get_or_404(id)
     if request.method=="POST":
-        db.session.delete(category)
+        database.session.delete(category)
         flash(f"The brand {category.name} was deleted from your database","success")
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('admin'))
     flash(f"The brand {category.name} can't be  deleted from your database","warning")
     return redirect(url_for('admin'))
@@ -151,9 +151,9 @@ def addproduct():
         image_2 = photos.save(request.files.get('image_2'), name=secrets.token_hex(10) + ".")
         image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10) + ".")
         addproduct = Addproduct(name=name,price=price,discount=discount,stock=stock,colors=colors,desc=desc,category_id=category,brand_id=brand,image_1=image_1,image_2=image_2,image_3=image_3)
-        db.session.add(addproduct)
+        database.session.add(addproduct)
         flash(f'The product {name} was added in database','success')
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('admin'))
     return render_template('products/addproduct.html', form=form, title='Add a Product', brands=brands,categories=categories)
 
@@ -195,7 +195,7 @@ def updateproduct(id):
                 product.image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10) + ".")
 
         flash('The product was updated','success')
-        db.session.commit()
+        database.session.commit()
         return redirect(url_for('admin'))
     form.name.data = product.name
     form.price.data = product.price
@@ -221,8 +221,8 @@ def deleteproduct(id):
             os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_3))
         except Exception as e:
             print(e)
-        db.session.delete(product)
-        db.session.commit()
+        database.session.delete(product)
+        database.session.commit()
         #Only if the work we've done with the Session includes new data that needs to be stored to the database is the call to Session.commit() required. The call to Session.commit() would not be required if we were only making SELECT calls and did not need to write any modifications.
         flash(f'The product {product.name} was delete from your record','success')
         return redirect(url_for('admin'))

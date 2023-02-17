@@ -1,5 +1,5 @@
 from flask import render_template,session, request,redirect,url_for,flash,current_app
-from shop import db , app
+from shop import database , app
 from shop.products.models import Addproduct
 from shop.products.routes import brands, categories
 import json

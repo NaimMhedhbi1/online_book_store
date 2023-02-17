@@ -26,18 +26,18 @@ photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 patch_request_class(app)
 
-db = SQLAlchemy(app) 
+database = SQLAlchemy(app) 
 bcrypt = Bcrypt(app)
 search = Search()
 search.init_app(app)
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, database)
 #SQLite is a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine.
 with app.app_context():
-    if db.engine.url.drivername == "sqlite": 
-        migrate.init_app(app, db, render_as_batch=True)
+    if database.engine.url.drivername == "sqlite": 
+        migrate.init_app(app, database, render_as_batch=True)
     else:
-        migrate.init_app(app, db)
+        migrate.init_app(app, database)
 
 #Initializing flask_login  and this si the minimum that we need to set up a flask login 
 login_manager = LoginManager()

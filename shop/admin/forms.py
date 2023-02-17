@@ -1,12 +1,12 @@
 from wtforms import BooleanField, StringField, PasswordField, validators , ValidationError
 from flask_wtf import FlaskForm, Form
-from .models import Visiter
+from .models import Admin_Admin
 #Secure Form : The FlaskForm will be a session secure form with csrf protection without any settings.
 #User Sign-up Form
 #With WTForms, validation is accomplished by assigning a field a collection of validators that will be executed when the containing form is validated. You give these using the second argument, validators, of the field constructor.
 #<==================================================================================================>
 class SignupForm(FlaskForm):
-    name = StringField('Name', [validators.Length(min=4, max=25) , validators.DataRequired()]) 
+    name = StringField('Name', [validators.Length(min=5, max=25) , validators.DataRequired()]) 
     #   #wtforms.fields is a class. (Default Field Arguments)[source] StringFieldThis field, which represents an input type="text">, serves as the foundation for the majority of the more intricate fields.
     password = PasswordField('Password', [
         validators.Length(min=6, message='Try a stronger password'),
@@ -22,10 +22,10 @@ class SignupForm(FlaskForm):
     #wtforms.fields is a class. Default Field Arguments for PasswordField[source] #Except that it creates an input type="password">, a StringField.
     #How then do we retrieve data from our database? For this purpose Flask-SQLAlchemy provides a query attribute on your Model class. When you access it you will get back a new query object over all records. You can then use methods like filter() to filter the records before you fire the select with all() or first(). If you want to go by primary key you can also use get().   
     def check_username(self, field):
-        if Visiter.query.filter_by(username=field.data).first():
+        if Admin_Admin.query.filter_by(username=field.data).first():
             raise ValidationError('Try another one !already taken')   
     def check_email(self, field):
-        if Visiter.query.filter_by(email=field.data).first():
+        if Admin_Admin.query.filter_by(email=field.data).first():
             raise ValidationError('try another one! Already taken')         
 #A validator merely accepts an input, checks to see if it satisfies some requirement, like a string's maximum length, and then returns. Otherwise it raises a ValidationError if the validation is unsuccessful. This method allows you to chain any number of field validators together and is really straightforward and adaptable.
 #Servers and applications can both fail. You'll encounter an exception in production sooner or later. There will occasionally be exceptions even if your code is perfect. Why? Considering that all else will fall short. Here are some instances where flawless code can result in server issues.
