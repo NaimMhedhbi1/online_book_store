@@ -1,7 +1,7 @@
 from flask import render_template,session, request,redirect,url_for,flash,current_app
 from shop import app,database,photos, search
-from .models import Category,Brand,Addproduct
-from .forms import Addproducts
+from .models import Category,Brand,Addproduct,datas
+from .forms import Addproducts,Review_form
 import secrets
 import os
 
@@ -27,7 +27,7 @@ def result():
     products = Addproduct.query.msearch(searchword, fields=['name','desc'] , limit=6)
     return render_template('products/result.html',products=products,brands=brands(),categories=categories())
 
-@app.route('/product/<int:id>')
+@app.route('/product/<int:id>', methods=['GET','POST'])
 def single_page(id):
     product = Addproduct.query.get_or_404(id)
     return render_template('products/single_page.html',product=product,brands=brands(),categories=categories())
@@ -211,6 +211,7 @@ def updateproduct(id):
 # app.route('/deleteproduct/<int:id>') decorator to create a view function called deleteproduct()
 @app.route('/deleteproduct/<int:id>', methods=['POST'])
 def deleteproduct(id):
+    
     product = Addproduct.query.get_or_404(id)
     if request.method =="POST":
         try:
@@ -230,3 +231,56 @@ def deleteproduct(id):
     return redirect(url_for('admin')) #Flask is informed by the #render template() function that the route should display an HTML template.
 
 
+
+import datetime
+
+currentDT = datetime.datetime.now()
+day=currentDT.day
+month=currentDT.month
+year=currentDT.year 
+
+@app.route('/write', methods=['GET','POST'])
+def write():
+    msg=""
+    data=datas.query.all()
+    re=[]
+    for dat in data:
+        a=(dat.first_name,dat.product,dat.review)
+        re.append(a)
+    if request.method == 'POST' :
+        first_name=request.form["Name"]
+        product=request.form["Product"]
+        review=request.form["Review"]
+        data=datas(first_name,product,review)
+        database.session.add(data)
+        database.session.commit()
+        data=datas.query.all()
+        re=[]
+        for dat in data:
+            a=(dat.first_name,dat.product,dat.review)
+            re.append(a)
+            msg="Thank you for giving your valuable review pls scroll down to read your review"
+            return  redirect(url_for('new'))
+    return  render_template("products/index1reviews.html" ,msg=msg,len=len(re),re = re,day=day,month=month,year=year)
+	
+@app.route('/new',methods=['GET'])
+def new():
+	data=datas.query.all()
+	re=[]
+	for dat in data:
+		a=(dat.first_name,dat.product,dat.review)
+		re.append(a)
+	msg="Thank you for giving your valuable review pls scroll down to read your review"
+	
+	return  render_template("products/index1reviews.html" ,msg=msg,len=len(re),re = re,day=day,month=month,year=year)
+
+@app.route('/read')
+def read():
+	data=datas.query.all()
+	re=[]
+	for dat in data:
+		a=(dat.first_name,dat.product,dat.review)
+		re.append(a)
+
+		
+	return render_template("products/index2reviews.html",len=len(re),re = re,day=day,month=month,year=year)

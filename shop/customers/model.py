@@ -57,6 +57,7 @@ class CustomerOrder(database.Model):
         return'<CustomerOrder %r>' % self.invoice
 
 
+
 # Create Database Models
 from shop import app 
 app.app_context().push()

@@ -22,3 +22,10 @@ max - The string's maximum length. The maximum length won't be verified if it's 
 
 message - The error message to display in the event of a validation mistake. can be interpolated if needed using %(min)d and %(max)d. Depending on the presence of min and max, useful defaults are offered.        
 """
+######## Flask
+from flask_wtf import FlaskForm
+class Review_form(FlaskForm):
+    review = TextAreaField('reviews',
+                                [validators.DataRequired(),
+                                validators.length(min=1)])
+    submit = SubmitField('submit')
