@@ -13,6 +13,18 @@ What does Flask's database Model mean?
 A Model is a Python class that represents a database table, and each of its characteristics corresponds to a table column. A model class inherits from database.Model and defines columns as an instance of database.Column class.
 """
 #<==================================================================================================>
+class db_posts(database.Model):   
+    id =database.Column(database.Integer,primary_key=True)
+    username=database.Column(database.String)
+    title=database.Column(database.String)
+    link=database.Column(database.String)
+    content=database.Column(database.String)
+    def __init__(self,username,title,link,content):
+        self.username=username
+        self.title=title
+        self.link=link
+        self.content = content
+
 class Admin_Admin(database.Model):
     id = database.Column(database.Integer, primary_key=True) #should be unique 
     name = database.Column(database.String(60),unique=False, nullable=False) #unique is equal to false, two users can have the same name but noit the same user name  

@@ -259,6 +259,39 @@
                             </div>
                         </article>
 
+
+
+
+                        {% block body%}
+                        {%for a,b,c,d in re %}
+                        <article>
+                            <div class="article-image">
+                                <img src="{{url_for('static', filename='materials/last-news-2.png')}}">
+                            </div>  
+
+                            <div class="article-info">
+                                <div class="article-date">9 Feb 12:56</div>
+                                <h2 class="article-title">
+                                    <a href={{c}} class="article-link"}}>{{b}}</a>
+                                </h2>
+                                <h6 class="card-subtitle mb-2 text-muted">Writtten by {{a}} on {{year}}-{{month}}-{{day}}</h6>
+
+                                <div class="article-tags">
+                                    <span class="tag">web marketing</span>
+                                    <span class="tag">workshops</span>
+                                    <span class="tag">online</span>
+                                </div>
+
+                                
+                            </div>
+                        </article>
+                        {% endfor %}
+                        {% endblock %} 
+
+
+
+
+
                     </div>
                 </section>
 

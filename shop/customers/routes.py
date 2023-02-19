@@ -154,5 +154,3 @@ def get_pdf(invoice):
     return request(url_for('orders'))
 
 #Flask is informed by the #render template() function that the route should display an HTML template.
-
-

@@ -1,13 +1,20 @@
 from flask import render_template,session, request,redirect,url_for,flash
 from shop import app,database,bcrypt
 from .forms import SignupForm,LoginForm
-from .models import Admin_Admin
+from .models import Admin_Admin,db_posts
 from shop.products.models import Addproduct,Category,Brand
 #Flask-Session is an extension for Flask that adds support for Server-side Session to your application.
 #The URL rule is prefixed with the blueprint’s URL prefix. The endpoint name, used with url_for(), is prefixed with the blueprint’s name.
 #Flask is informed by the #render template() function that the route should display an HTML template.
 #<==================================================================================================>
+import datetime
 
+
+
+currentDT = datetime.datetime.now()
+_day=currentDT.day
+_month=currentDT.month
+_year=currentDT.year
 
 # app.route('/admin') decorator to create a view function called admin().
 @app.route('/admin')
@@ -23,10 +30,46 @@ def terms():
 
 #Flask is informed by the #render template() function that the route should display an HTML template.
 # app.route('/blog') decorator to create a view function called blog().
-@app.route('/blog',methods=['GET','POST'])
+"""@app.route('/blog',methods=['GET','POST'])
 def blog():
-    return render_template('admin/blog.html')
+    return render_template('admin/blog.html')"""
 
+
+@app.route('/addpost', methods=['GET','POST'])
+def addpost():
+    
+    received_data=db_posts.query.all()
+    _re=[]
+    for dat in received_data:
+        x=(dat.username,dat.title,dat.link,dat.content)
+        _re.append(x)
+    if request.method == 'POST' :
+        username=request.form["username"]
+        title=request.form["title"]
+        content=request.form["content"]
+        link=request.form["link"]
+        received_data=db_posts(username,title,link,content)
+        database.session.add(received_data)
+        database.session.commit()
+        received_data=db_posts.query.all()
+        _re=[]
+        for dat in received_data:
+            x=(dat.username,dat.title,dat.link,dat.content)
+            _re.append(x)
+            msg="Thank you for your feedback !"
+            return  redirect(url_for('postnew'))
+    return  render_template("admin/posts_blog.html" ,len=len(_re),re = _re,day=_day,month=_month,year=_year)
+
+@app.route('/postnew',methods=['GET'])
+def postnew():
+	_data=db_posts.query.all()
+	_re=[]
+	for dat in _data:
+		y=(dat.username,dat.title,dat.link,dat.content)
+		_re.append(y)
+	
+	
+	return  render_template("admin/blog.html",len=len(_re),re = _re,day=_day,month=_month,year=_year)
 
 # app.route('/brands') decorator to create a view function called brands()
 @app.route('/brands')
