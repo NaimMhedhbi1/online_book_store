@@ -45,14 +45,14 @@ class Category(database.Model):
     def __repr__(self):
         return '<Catgory %r>' % self.name
 
-class datas(database.Model):   
+class db_reviews(database.Model):   
     id =database.Column(database.Integer,primary_key=True)
-    first_name=database.Column(database.String)
-    product=database.Column(database.String)
+    username=database.Column(database.String)
+    name_product=database.Column(database.String)
     review=database.Column(database.String)
-    def __init__(self,first_name,product,review):
-        self.first_name=first_name
-        self.product=product
+    def __init__(self,username,name_product,review):
+        self.username=username
+        self.name_product=name_product
         self.review=review
     
 
