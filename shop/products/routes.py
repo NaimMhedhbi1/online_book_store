@@ -9,9 +9,9 @@ import datetime
 
 
 currentDT = datetime.datetime.now()
-day=currentDT.day
-month=currentDT.month
-year=currentDT.year 
+_day=currentDT.day
+_month=currentDT.month
+_year=currentDT.year 
 #Flask is informed by the #render template() function that the route should display an HTML template.
 def brands():
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
@@ -259,7 +259,7 @@ def give_review():
             _re.append(x)
             msg="Thank you for your feedback !"
             return  redirect(url_for('review_new'))
-    return  render_template("products/index1reviews.html" ,msg=msg,len=len(_re),re = _re,day=day,month=month,year=year)
+    return  render_template("products/index1reviews.html" ,msg=msg,len=len(_re),re = _re,day=_day,month=_month,year=_year)
 	
 @app.route('/review_new',methods=['GET'])
 def review_new():
@@ -270,7 +270,7 @@ def review_new():
 		re.append(y)
 	msg=""
 	
-	return  render_template("products/index1reviews.html" ,msg=msg,len=len(re),re = re,day=day,month=month,year=year)
+	return  render_template("products/index1reviews.html" ,msg=msg,len=len(re),re = re,day=_day,month=_month,year=_year)
 
 @app.route('/review_read')
 def review_read():
@@ -281,4 +281,4 @@ def review_read():
 		re.append(y)
 
 		
-	return render_template("products/index2reviews.html",len=len(re),re = re,day=day,month=month,year=year)
+	return render_template("products/index2reviews.html",len=len(re),re = re,day=_day,month=_month,year=_year)
