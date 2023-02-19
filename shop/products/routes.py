@@ -259,7 +259,7 @@ def give_review():
             _re.append(x)
             msg="Thank you for your feedback !"
             return  redirect(url_for('review_new'))
-    return  render_template("products/index1reviews.html" ,msg=msg,len=len(_re),re = _re,day=_day,month=_month,year=_year)
+    return  render_template("products/index2reviews.html" ,msg=msg,len=len(_re),re = _re,day=_day,month=_month,year=_year)
 	
 @app.route('/review_new',methods=['GET'])
 def review_new():
@@ -270,7 +270,7 @@ def review_new():
 		re.append(y)
 	msg=""
 	
-	return  render_template("products/index1reviews.html" ,msg=msg,len=len(re),re = re,day=_day,month=_month,year=_year)
+	return  render_template("products/index2reviews.html" ,msg=msg,len=len(re),re = re,day=_day,month=_month,year=_year)
 
 @app.route('/review_read')
 def review_read():

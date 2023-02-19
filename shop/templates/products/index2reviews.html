@@ -7,25 +7,27 @@
             <div class="w3-col m10" >
                 
                     <form  method="POST" action="/give_review">
-                        <div class="w3-row-padding" style="margin:100 160px 80px 160px">
+                        <div class="w3-row-padding"  style=" margin-bottom:2rem; margin-left: 5cm;">
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name" />
+                            <input class="w3-input w3-border" style=" margin-bottom:0rem; margin-left: 5cm;" type="text" placeholder="Name" required name="Name" />
                         </div>
                         <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Product" required name="Product" />
+                            <input class="w3-input w3-border" style=" margin-bottom:0rem; margin-left: 5cm;" type="text" placeholder="Product" required name="Product" />
                         </div>
-                        </div>
-                        <input class="w3-input w3-border" type="text" placeholder="Review" required name="Review" />
-                        <button class="w3-button w3-black w3-section w3-right" type="submit">POST</button>
+                       
+                        
+                        <input class="w3-input w3-border" style=" margin-bottom:0rem; margin-left: 5cm;" type="text" placeholder="Review" required name="Review" />
+                        <button class="w3-button w3-yellow w3-section w3-right"  type="submit">POST</button>
+                    </div>
                     </form>             
             </div>
         </div>     
-        <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:700px" id="/review_read">
+        <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:1000px" id="/review_read">
             <div class="w3-col m10" >
                 <div ><h4>{{msg}}</h4></div>
                 {% block body%}
                     {%for a,b,c in re %}
-                        <div class="card bd-highlight" id=box style=" margin-bottom:2rem;">
+                        <div class="card bd-highlight" id=box style=" margin-bottom:2rem; margin-left: 6cm;">
                             <div class="card-body">
                                 <div class="d-flex">
                                     <h4 class="card-title flex-grow-1">{{c}}</h4>
