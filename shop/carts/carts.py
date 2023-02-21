@@ -12,9 +12,9 @@ def MagerDicts(dict1,dict2):
         return dict1  + dict2
     if isinstance(dict1, dict) and isinstance(dict2, dict):
         return dict(list(dict1.items()) + list(dict2.items()))
- #If the given object is an instance of the given type, the isinstance() function returns True; otherwise, it returns False.If the type parameter is a tuple, this function will return True if the object is one of the types in the tuple.
+#Data values are kept as key:value pairs in dictionaries.A dictionary is a group of items that are unique, changing, and ordered*.
+#If the given object is an instance of the given type, the isinstance() function returns True; otherwise, it returns False.If the type parameter is a tuple, this function will return True if the object is one of the types in the tuple.
 #We may import request and utilize request. args in Flask to obtain form request data. Request is used in the code above to retrieve the data contained
-
 #Flask is informed by the #render template() function that the route should display an HTML template.
 # app.route('/addcart') decorator to create a view function called Addcart().
 @app.route('/addcart', methods=['POST'])
@@ -35,7 +35,7 @@ def AddCart():
                             session.modified = True
                             item['quantity'] += 1
                 else:
-                    session['Shoppingcart'] = MagerDicts(session['Shoppingcart'], DictItems)
+                    session['Shoppingcart'] = MagerDicts(session['Shoppingcart'], DictItems) #apply the function MagerDicts 
                     return redirect(request.referrer)
             else:
                 session['Shoppingcart'] = DictItems
